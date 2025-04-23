@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,11 +30,94 @@ import com.pcwk.ehr.member.vo.MemberVO;
 
 public class MemberDao implements CafeDiv<MemberVO> {
 	
-	@Override
-	public int  doSave(MemberVO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	private List<MemberVO> cart = new ArrayList<>();
+
+	public int doSave(MemberVO dto) {
+		String filePath = "C:\\Users\\user\\git\\repository\\JProject222\\menu.csv";
+		// 1. 메뉴 선택하기.
+		// 메뉴에 없는 제품 구매 불가.
+		// 선택 반복할 수 있게.
+		int result = 0;
+		boolean addMore = true;
+		Scanner sc = new Scanner(System.in);
+		
+		while (addMore) {
+
+			System.out.print("선택할 제품 번호를 입력해 주세요> ");
+			String inputcart = sc.nextLine();
+
+			if (inputcart.isEmpty()) {
+				System.out.println("다시 선택해 주세요.");
+				continue;
+			}
+			// 메뉴가 존재하는지 확인
+			boolean flag = false;
+			String cartMenuName = null;
+			try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					String[] parts = line.split(",");
+
+					// 메뉴 이름이 일치하면 가격 수정
+					if (parts.length == 3) {
+					    String menuNumber = parts[0].trim();
+					    if (menuNumber.equals(inputcart.trim())) {
+					        cartMenuName = parts[1].trim();
+					        flag = true;
+					        break;
+					    }
+					}
+					
+					
+
+				} // while end
+				if (!flag) {
+					System.out.println("해당 번호의 메뉴는 존재하지 않습니다.");
+					continue; // 다시 메뉴 선택으로 돌아가기
+				}
+			} catch (FileNotFoundException e) {
+				System.out.println("파일을 찾을 수 없습니다: " + e.getMessage());
+				return 0;
+			} catch (IOException e1) {
+				System.out.println("파일 읽기 오류: " + e1.getMessage());
+				return 0;
+			}
+			
+			// 2. 개수 선택하기
+			int input = 0;
+			while (true) {
+				System.out.print("개수를 선택해 주세요> ");
+				String countcart = sc.nextLine();
+				try {
+					input = Integer.parseInt(countcart);
+					if (input <= 0) {
+						System.out.println("가격은 0보다 커야 합니다.");
+						continue;
+					}
+					break; // 정상 입력이면 루프 탈출
+				} catch (NumberFormatException e) {
+					System.out.println("가격에는 숫자만 넣으세요.");
+				}
+			} // 개수 while end
+			dto.setName(cartMenuName); // 메뉴명 저장
+			dto.setQuantity(input);
+			cart.add(dto);
+			System.out.println(cartMenuName + " x " + input + " 장바구니에 담았습니다.");
+			result = 1;
+
+			// 다음 메뉴 등록 여부 확인
+			System.out.print("다른 메뉴를 추가하시겠습니까? (Y/N): ");
+			String answer = sc.nextLine();
+			if (!answer.equalsIgnoreCase("Y")) {
+				System.out.println("메뉴 등록을 종료합니다.");
+				addMore = false;
+			}
+		} // while 1 end
+		sc.close();
+		return result;
+	}// doSave end
+
 
 	@Override
 	public List<MemberVO> doRetrieve(MemberVO dto) {
