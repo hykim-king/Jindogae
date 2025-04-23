@@ -52,10 +52,8 @@ public class AdminDao implements CafeDiv<AdminVO> {
 //				System.out.println(vo);
 //			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +72,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 	@Override
 	public List<AdminVO> doRetrieve(AdminVO dto) {
 
-		return null;
+		return new ArrayList<AdminVO>(admin);
 	}
 
 	@Override

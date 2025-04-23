@@ -60,7 +60,8 @@ public class Menu {
 				System.out.println("프로그램 종료!");
 				return;
 
-			// default:
+			default: 
+				System.out.println("다시 선택해주세요.");
 
 			}
 		}
