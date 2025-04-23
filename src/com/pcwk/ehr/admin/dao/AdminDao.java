@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +85,20 @@ public class AdminDao implements CafeDiv<AdminVO> {
 
 	@Override
 	public int doDelete(AdminVO dto) {
+		int beforeSize = admin.size();
 		
+		admin.removeIf(vo -> vo.getNo()==dto.getNo());
+		
+		if(beforeSize == admin.size()) {
+			System.out.println("삭제 대상 없음: no = "+dto.getNo());
+			return 0;
+		}
+		
+		try(PrintWriter writer = new PrintWriter(CAFE_DATA)){
+			
+		} catch (IOException e) {		
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
