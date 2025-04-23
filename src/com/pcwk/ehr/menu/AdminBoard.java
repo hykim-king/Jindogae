@@ -32,15 +32,39 @@ public class AdminBoard {
 			System.out.print("어떤 프로그램을 할 지 선택하세요>");
 			int search = scanner.nextInt();
 			AdminDao i = new AdminDao();
+			AdminVO vo = new AdminVO();
 			switch (search) {
 			case 1:
 				List<AdminVO> menuList = i.doRetrieve(null);
 				break;
 			case 2:
-				i.doSave(null);
+				while (true) {
+					System.out.println("===== 메뉴 등록 =====");
+					int result = i.doSave(vo);
+
+					if (result == 1) {
+						System.out.println("메뉴가 성공적으로 등록되었습니다.");
+						
+					} else {
+						System.out.println("메뉴 등록에 실패했습니다.");
+					}
+					break;
+				}
 				break;
 			case 3:
-				i.doUpdate(null);
+				while (true) {
+					System.out.println("===== 가격 수정 =====");
+					int result = i.doUpdate(vo);
+
+					if (result == 1) {
+						System.out.println("메뉴가 성공적으로 수정되었습니다.");
+						
+					} else {
+						System.out.println("가격 수정에 실패했습니다.");
+					}
+					break;
+				}
+
 				break;
 			case 4:
 				System.out.print("삭제할 번호를 입력하세요: ");
