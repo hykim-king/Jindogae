@@ -17,7 +17,30 @@ public class MemberVO {
 	private int NO;
 	private String name;
 	private int price;
-	private int amount;
+	private int quantity; //수량
+	
+	
+
+	/**
+	 * 
+	 */
+	public MemberVO() {
+		super();
+	}
+	
+	/**
+	 * @param nO
+	 * @param name
+	 * @param price
+	 * @param quantity
+	 */
+	public MemberVO(int nO, String name, int price, int quantity) {
+		super();
+		NO = nO;
+		this.name = name;
+		this.price = price;
+		this.quantity = quantity;
+	}
 
 	public int getNO() {
 		return NO;
@@ -39,17 +62,22 @@ public class MemberVO {
 	}
 	
 	
-	public int getAmount() {
-		return amount;
+	
+	public int getQuantity() {
+		return quantity;
 	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [NO=" + NO + ", name=" + name + ", price=" + price + ", amount=" + amount + "]";
+		return "MemberVO [NO=" + NO + ", name=" + name + ", price=" + price + ", quantity=" + quantity + "]";
 	}
+	/**
+	 * @param vo
+	 * @return
+	 */
+	
 	
 	
 	
