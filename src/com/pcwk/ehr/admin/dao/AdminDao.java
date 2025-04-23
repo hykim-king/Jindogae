@@ -25,7 +25,6 @@ import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 
 public class AdminDao implements CafeDiv<AdminVO> {
-	// \data\cafe.csv
 	public static final String CAFE_DATA = ".\\data\\cafe.csv";
 	private List<AdminVO> admin = new ArrayList<AdminVO>();
 

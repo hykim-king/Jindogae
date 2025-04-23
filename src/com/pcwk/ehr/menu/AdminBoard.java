@@ -34,7 +34,7 @@ public class AdminBoard {
 			AdminDao i = new AdminDao();
 			switch (search) {
 			case 1:
-				List<AdminVO> menuList = i.doRetrieve(null);	
+				List<AdminVO> menuList = i.doRetrieve(null);
 				break;
 			case 2:
 				i.doSave(null);
