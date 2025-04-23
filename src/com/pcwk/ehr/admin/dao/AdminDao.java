@@ -28,12 +28,12 @@ import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 
 public class AdminDao implements CafeDiv<AdminVO> {
-	public static final String CAFE_DATA = ".\\data\\cafe.csv";
-	private List<AdminVO> admin = new ArrayList<AdminVO>();
+	public static final String CAFE_DATA = ".\\data\\cafe.csv";// csv 경로 저장
+	private List<AdminVO> admin = new ArrayList<AdminVO>();// 리스트 만들기
 	Scanner scanner = new Scanner(System.in);
 	
 	public AdminDao() {
-		getAdminReadFile(CAFE_DATA);
+		getAdminReadFile(CAFE_DATA);//파일 읽기
 	}
 
 	private List<AdminVO> getAdminReadFile(String path) {
@@ -42,13 +42,13 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
 
-				String[] dataArr = line.split(",");
-				int no = Integer.parseInt(dataArr[0]);
-				String name = dataArr[1];
-				int price = Integer.parseInt(dataArr[2]);
+				String[] dataArr = line.split(",");//, 기준으로 나누기
+				int no = Integer.parseInt(dataArr[0]);//첫번째를 no로 설정
+				String name = dataArr[1];//두번째를 메뉴명으로 설정
+				int price = Integer.parseInt(dataArr[2]);//세번째를 가격으로 설정
 
 				AdminVO adminVO = new AdminVO(no, name, price);
-				admin.add(adminVO);
+				admin.add(adminVO);//vo를 호출해서 admin에 저장
 			}
 //			System.out.println("추가 확인");
 //			for (AdminVO vo : admin) {
@@ -62,7 +62,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			e.printStackTrace();
 		}
 
-		return admin;
+		return admin;//csv파일 읽기
 
 	}
 
@@ -141,7 +141,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 	@Override
 	public List<AdminVO> doRetrieve(AdminVO dto) {
 
-		return new ArrayList<AdminVO>(admin);
+		return new ArrayList<AdminVO>(admin);//admin에 저장된 리스트 불러오기
 	}
 
 	@Override
@@ -211,11 +211,11 @@ public class AdminDao implements CafeDiv<AdminVO> {
 
 	@Override
 	public int doDelete(AdminVO dto) {
-		int beforeSize = admin.size();
+		int beforeSize = admin.size();//beforeSize에 원래 size 저장
 		
-		admin.removeIf(vo -> vo.getNo()==dto.getNo());
+		admin.removeIf(vo -> vo.getNo()==dto.getNo());//번호기준으로 삭제
 		
-		if(beforeSize == admin.size()) {
+		if(beforeSize == admin.size()) {//원래사이즈가 beforeSize랑 같다면 삭제 x
 			System.out.println("삭제 대상 없음: no = "+dto.getNo());
 			return 0;
 		}
