@@ -95,11 +95,17 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		}
 		
 		try(PrintWriter writer = new PrintWriter(CAFE_DATA)){
-			
+			for(AdminVO vo : admin) {
+				writer.println(vo.getNo()+"," + vo.getName()+","+ vo.getPrice()+",");
+			}
 		} catch (IOException e) {		
 			e.printStackTrace();
+			return 0;
 		}
-		return 0;
+		System.out.println("삭제 완료: no=" +dto.getNo());
+		return 1;
 	}
+	
+	
 
 }

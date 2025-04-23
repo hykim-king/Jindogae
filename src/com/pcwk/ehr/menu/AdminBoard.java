@@ -16,6 +16,7 @@ package com.pcwk.ehr.menu;
 import java.util.Scanner;
 
 import com.pcwk.ehr.admin.dao.AdminDao;
+import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 
 public class AdminBoard {
@@ -41,7 +42,17 @@ public class AdminBoard {
 				i.doUpdate(null);
 				break;
 			case 4:
-				i.doDelete(null);
+				System.out.print("삭제할 번호를 입력하세요: ");
+				int noToDelete = scanner.nextInt();
+				
+				AdminVO deleteTarget = new AdminVO(noToDelete,"",0);
+				int result = i.doDelete(deleteTarget);
+				
+				if(result == 1) {
+					System.out.println("성공적으로 삭제되었습니다.");
+				}else {
+					System.out.println("해당 번호는 없는 번호입니다.");
+				}
 				break;
 			case 5:
 				System.out.println("프로그램 종료");
