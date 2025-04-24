@@ -33,19 +33,16 @@ public class AdminBoard {
 			System.out.print("어떤 프로그램을 할 지 선택하세요>");
 			int search = scanner.nextInt();
 			AdminDao i = new AdminDao();
-<<<<<<< HEAD
+
 			MainBoard main = new MainBoard();
-=======
+
 			AdminVO vo = new AdminVO();
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 			switch (search) {
 			case 1://메뉴 조회
 				List<AdminVO> menuList = i.doRetrieve(null);
 				break;
-<<<<<<< HEAD
-			case 2://메뉴 등록
-				i.doSave(null);
-=======
+
+
 			case 2:
 				while (true) {
 					System.out.println("===== 메뉴 등록 =====");
@@ -59,12 +56,8 @@ public class AdminBoard {
 					}
 					break;
 				}
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 				break;
-<<<<<<< HEAD
-			case 3://매뉴 수정
-				i.doUpdate(null);
-=======
+
 			case 3:
 				while (true) {
 					System.out.println("===== 가격 수정 =====");
@@ -78,8 +71,6 @@ public class AdminBoard {
 					}
 					break;
 				}
-
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 				break;
 			case 4://메뉴 삭제
 				System.out.print("삭제할 번호를 입력하세요: ");

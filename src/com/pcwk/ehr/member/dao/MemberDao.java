@@ -31,6 +31,7 @@ import com.pcwk.ehr.member.vo.MemberVO;
 public class MemberDao implements CafeDiv<MemberVO> {
 	
 	private List<MemberVO> cart = new ArrayList<>();
+	Scanner sc = new Scanner(System.in);
 
 	public int doSave(MemberVO dto) {
 		String filePath = "C:\\Users\\user\\git\\repository\\JProject222\\menu.csv";
@@ -39,7 +40,6 @@ public class MemberDao implements CafeDiv<MemberVO> {
 		// 선택 반복할 수 있게.
 		int result = 0;
 		boolean addMore = true;
-		Scanner sc = new Scanner(System.in);
 		
 		while (addMore) {
 
@@ -142,8 +142,40 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 	@Override
 	public int doDelete(MemberVO dto) {
-		
-		return 0;
-	}
+		System.out.println("삭제할 번호를 입력하세요:");
+	    int input = sc.nextInt();  // 장바구니 번호를 입력받음
 
+	    // 장바구니에서 해당 번호의 아이템을 찾음
+	    for (int i = 0; i < cart.size(); i++) {
+	        MemberVO item = cart.get(i);
+
+	        // 입력된 번호와 장바구니 번호가 일치하는지 확인
+	        if (item.getNO() == input) {  
+	            int currentQuantity = item.getQuantity();
+	            System.out.println("삭제할 수량을 입력하세요:");
+	            int deleteQuantity = sc.nextInt();  // 삭제할 수량 입력
+
+	            if (deleteQuantity <= 0) {
+	                System.out.println("수량은 1개 이상이어야 합니다.");
+	                return 0;
+	            }
+
+	            if (deleteQuantity > currentQuantity) {
+	                System.out.println("삭제할 수량이 장바구니 수량보다 많습니다.");
+	                return 0;
+	            } else if (deleteQuantity == currentQuantity) {
+	                cart.remove(i);  // 장바구니에서 아이템을 제거
+	                System.out.println("상품이 삭제되었습니다.");
+	            } else {
+	                item.setQuantity(currentQuantity - deleteQuantity);  // 일부 수량만 남기고 수정
+	                System.out.println("상품 일부 수량이 삭제되었습니다.");
+	            }
+	            return 1;  // 성공적으로 삭제됨
+	        }
+	    }
+
+	    System.out.println("해당 번호의 상품이 장바구니에 없습니다.");
+	    return 0;  // 해당 번호가 장바구니에 없는 경우
+
+	}
 }

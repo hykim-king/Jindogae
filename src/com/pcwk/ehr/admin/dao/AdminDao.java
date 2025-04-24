@@ -28,14 +28,10 @@ import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 
 public class AdminDao implements CafeDiv<AdminVO> {
-<<<<<<< HEAD
-	public static final String CAFE_DATA = ".\\data\\cafe.csv";// CSV파일 읽는 과정
-	private List<AdminVO> admin = new ArrayList<AdminVO>();
-=======
+
 	public static final String CAFE_DATA = ".\\data\\cafe.csv";// csv 경로 저장
 	private List<AdminVO> admin = new ArrayList<AdminVO>();// 리스트 만들기
 	Scanner scanner = new Scanner(System.in);
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 
 	public AdminDao() {
 		getAdminReadFile(CAFE_DATA);// 파일 읽기
@@ -47,24 +43,13 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
 
-<<<<<<< HEAD
-				String[] dataArr = line.split(",");//,기준으로 정렬
-				int no = Integer.parseInt(dataArr[0]);	 //첫 번째 NO로 설정
-				String name = dataArr[1];			  	 //두 번째 NAME으로 설정
-				int price = Integer.parseInt(dataArr[2]);//세 번째 PRICE로 설정
-=======
 				String[] dataArr = line.split(",");// , 기준으로 나누기
 				int no = Integer.parseInt(dataArr[0]);// 첫번째를 no로 설정
 				String name = dataArr[1];// 두번째를 메뉴명으로 설정
 				int price = Integer.parseInt(dataArr[2]);// 세번째를 가격으로 설정
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 
 				AdminVO adminVO = new AdminVO(no, name, price);
-<<<<<<< HEAD
 				admin.add(adminVO);//화면 출력
-=======
-				admin.add(adminVO);// vo를 호출해서 admin에 저장
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 			}
 //			System.out.println("추가 확인");
 //			for (AdminVO vo : admin) {
@@ -173,11 +158,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 	@Override
 	public List<AdminVO> doRetrieve(AdminVO dto) {
 
-<<<<<<< HEAD
-		return new ArrayList<AdminVO>(admin);//admin에 들어있는 리스트 불러와 읽기
-=======
 		return new ArrayList<AdminVO>(admin);// admin에 저장된 리스트 불러오기
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 	}
 
 	@Override
@@ -244,32 +225,24 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		}
 
 	}
+	
 
 	@Override
 	public int doDelete(AdminVO dto) {
-<<<<<<< HEAD
-		int beforeSize = admin.size();//beforeSize 변수에 admin.size() 값 저장
-		
-		admin.removeIf(vo -> vo.getNo()==dto.getNo());//NO 기준으로 삭제
-		
-		if(beforeSize == admin.size()) {//삭제할 것이 없을 때
-			System.out.println("삭제 대상 없음: no = "+dto.getNo());
-=======
+
+
+
 		int beforeSize = admin.size();// beforeSize에 원래 size 저장
 
 		admin.removeIf(vo -> vo.getNo() == dto.getNo());// 번호기준으로 삭제
 
 		if (beforeSize == admin.size()) {// 원래사이즈가 beforeSize랑 같다면 삭제 x
 			System.out.println("삭제 대상 없음: no = " + dto.getNo());
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 			return 0;
 		}
-<<<<<<< HEAD
+
 		
-		try(PrintWriter writer = new PrintWriter(CAFE_DATA)){
-			for(AdminVO vo : admin) {//삭제한 후 리스트에서 변수값 다시 받아서 다시 정렬
-				writer.println(vo.getNo()+"," + vo.getName()+","+ vo.getPrice()+",");
-=======
+
 		// 삭제 후 번호 갱신
 		for (int i = 0; i < admin.size(); i++) {
 			admin.get(i).setNo(i + 1); // 번호 1부터 다시 세팅
@@ -278,7 +251,6 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		try (PrintWriter writer = new PrintWriter(CAFE_DATA)) {
 			for (AdminVO vo : admin) {
 				writer.println(vo.getNo() + "," + vo.getName() + "," + vo.getPrice() + ",");
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

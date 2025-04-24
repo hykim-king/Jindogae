@@ -63,12 +63,8 @@ public class Menu {
 			System.out.print("어떤 프로그램을 할 지 선택하세요>");
 			int select = scanner.nextInt();
 			switch (select) {
-<<<<<<< HEAD
-			case 1: // 주문하기
-			case 2: // 주문 확인
-			case 3: // 주문 정보 삭제
-			case 4: // 프로그램 종료 후 메인화면으로 이동
-=======
+
+
 			case 1: // 메뉴선택
 				while (true) {
 					System.out.println("===== 고객 메뉴 선택 =====");
@@ -84,9 +80,23 @@ public class Menu {
 					break;
 				}
 				break;
-			case 2: // 메뉴삭제
+			case 2: 
+				while (true) {
+					System.out.println("===== 고객 메뉴 선택 =====");
+
+					MemberVO vo = new MemberVO();
+					int result = i.doDelete(vo);
+
+					if (result == 1) {
+						System.out.println("메뉴가 성공적으로 삭제되었습니다.");
+					} else {
+						System.out.println("메뉴 삭제에 실패했습니다.");
+					}
+					break;
+				}
+				break;
 			case 3:
->>>>>>> branch 'master' of https://github.com/hykim-king/Jindogae.git
+				
 				System.out.println("프로그램 종료!");
 				System.out.println("메인화면으로 돌아갑니다.");
 				main.Board();
