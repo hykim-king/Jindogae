@@ -42,6 +42,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
+		
 
 				String[] dataArr = line.split(",");// , 기준으로 나누기
 				int no = Integer.parseInt(dataArr[0]);// 첫번째를 no로 설정
@@ -158,7 +159,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 	@Override
 	public List<AdminVO> doRetrieve(AdminVO dto) {
 
-		return new ArrayList<AdminVO>(admin);// admin에 저장된 리스트 불러오기
+		return new ArrayList<>(admin);// admin에 저장된 리스트 불러오기
 	}
 
 	@Override

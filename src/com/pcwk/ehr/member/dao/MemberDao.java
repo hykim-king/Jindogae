@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 import com.pcwk.ehr.member.vo.MemberVO;
 
@@ -32,6 +33,44 @@ public class MemberDao implements CafeDiv<MemberVO> {
 	private List<MemberVO> cart = new ArrayList<>();
 	private int currentNo = 1;
 	Scanner sc = new Scanner(System.in);
+	public static final String CAFE_DATA = ".\\data\\cafe.csv";// csv 경로 저장
+	private List<AdminVO> admin = new ArrayList<AdminVO>();// 리스트 만들기
+
+	public MemberDao() {
+		getAdminReadFile(CAFE_DATA);// 파일 읽기
+	}
+
+	private List<AdminVO> getAdminReadFile(String path) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(path));) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+		
+
+				String[] dataArr = line.split(",");// , 기준으로 나누기
+				int no = Integer.parseInt(dataArr[0]);// 첫번째를 no로 설정
+				String name = dataArr[1];// 두번째를 메뉴명으로 설정
+				int price = Integer.parseInt(dataArr[2]);// 세번째를 가격으로 설정
+
+				AdminVO adminVO = new AdminVO(no, name, price);
+				admin.add(adminVO);//화면 출력
+			}
+//			System.out.println("추가 확인");
+//			for (AdminVO vo : admin) {
+//				System.out.println(vo);
+//			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return admin;// csv파일 읽기
+
+	}
+
 
 	public int doSave(MemberVO dto) {
 		String filePath = ".\\data\\cafe.csv";
@@ -127,8 +166,8 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 		System.out.println("\n[주문 내역]");
 		for (MemberVO item : cart) {
-			System.out.printf("번호: %d, 이름 : %s,수량 : %d%n", item.getNO(),item.getName(), item.getQuantity());
-		
+			System.out.printf("번호: %d, 이름 : %s,수량 : %d%n", item.getNO(), item.getName(), item.getQuantity());
+
 		}
 		return cart;
 	}
@@ -148,14 +187,14 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 		System.out.println("\n[주문 내역]");
 		for (MemberVO item : cart) {
-			System.out.printf("번호:%d  이름 : %s 수량 : %d%n", item.getNO(),item.getName(), item.getQuantity());
-		
+			System.out.printf("번호:%d  이름 : %s 수량 : %d%n", item.getNO(), item.getName(), item.getQuantity());
+
 		}
 		System.out.println("삭제할 번호를 입력하세요:");
 		int input;
 		try {
 			input = Integer.parseInt(sc.nextLine());
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			System.out.println("번호는 숫자만 입력 가능합니다.");
 			return 0;
 		}

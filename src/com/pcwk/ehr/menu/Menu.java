@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.pcwk.ehr.admin.dao.AdminDao;
+import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.member.dao.MemberDao;
 import com.pcwk.ehr.member.vo.MemberVO;
 
@@ -63,6 +64,7 @@ public class Menu {
 			System.out.println("└───────────────────────────────────────────────────────┘");
 			System.out.print("어떤 프로그램을 할 지 선택하세요>");
 			int select = scanner.nextInt();
+			MemberDao da = new MemberDao();
 			switch (select) {
 
 			case 1: // 메뉴선택
