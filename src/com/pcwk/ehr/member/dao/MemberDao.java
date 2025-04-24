@@ -30,6 +30,7 @@ import com.pcwk.ehr.member.vo.MemberVO;
 public class MemberDao implements CafeDiv<MemberVO> {
 
 	private List<MemberVO> cart = new ArrayList<>();
+	private int currentNo = 1;
 	Scanner sc = new Scanner(System.in);
 
 	public int doSave(MemberVO dto) {
@@ -97,9 +98,11 @@ public class MemberDao implements CafeDiv<MemberVO> {
 					System.out.println("가격에는 숫자만 넣으세요.");
 				}
 			} // 개수 while end
-			dto.setName(cartMenuName); // 메뉴명 저장
-			dto.setQuantity(input);
-			cart.add(dto);
+			MemberVO newDto = new MemberVO();
+			newDto.setName(cartMenuName);
+			newDto.setQuantity(input);
+			newDto.setNO(currentNo++);
+			cart.add(newDto);
 			System.out.println(cartMenuName + " x " + input + " 장바구니에 담았습니다.");
 			result = 1;
 
@@ -124,7 +127,8 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 		System.out.println("\n[주문 내역]");
 		for (MemberVO item : cart) {
-			System.out.printf("이름 : %s,수량 : %d%n", item.getName(), item.getQuantity());
+			System.out.printf("번호: %d, 이름 : %s,수량 : %d%n", item.getNO(),item.getName(), item.getQuantity());
+		
 		}
 		return cart;
 	}
@@ -137,8 +141,24 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 	@Override
 	public int doDelete(MemberVO dto) {
+		if (cart.isEmpty()) {
+			System.out.println("장바구니가 비어 있습니다.");
+			return 0;
+		}
+
+		System.out.println("\n[주문 내역]");
+		for (MemberVO item : cart) {
+			System.out.printf("번호:%d  이름 : %s 수량 : %d%n", item.getNO(),item.getName(), item.getQuantity());
+		
+		}
 		System.out.println("삭제할 번호를 입력하세요:");
-		int input = sc.nextInt(); // 장바구니 번호를 입력받음
+		int input;
+		try {
+			input = Integer.parseInt(sc.nextLine());
+		}catch(NumberFormatException e){
+			System.out.println("번호는 숫자만 입력 가능합니다.");
+			return 0;
+		}
 
 		// 장바구니에서 해당 번호의 아이템을 찾음
 		for (int i = 0; i < cart.size(); i++) {
