@@ -79,20 +79,19 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			// 1. 관리자는 음료명과 가격을 등록한다.
 			// 이름은 중복되면 안되며, 이미 존재하는 음료명은 등록 불가함.
 			do {
-			System.out.print("제품명을 입력하세요> ");
+			System.out.print("📝 제품명을 입력하세요 > ");
 			String inputName = scanner.nextLine();
 			
 			// 이름이 중복되면 안됨.
 			if (inputName.isEmpty()) {
-				System.out.println("메뉴 이름은 필수입니다.");
+				System.out.println("⚠️ 메뉴 이름은 필수입니다.");
 				continue;
 			}
 			isDuplicate1 = false;
 			// 중복되면 메세지를 생성 후 빠져나간다.
 			for (AdminVO vo : admin) {
 				if (vo.getName().equalsIgnoreCase(inputName)) {
-					System.out.println("이미 등록된 이름 입니다.");
-					System.out.println("다시 입력해 주세요.");
+					System.out.println("⚠️ 이미 등록된 이름입니다.\n☕️ 다시 입력해 주세요.");
 					isDuplicate1 = true; // 중복됨
 					break; //
 				}			
@@ -106,18 +105,18 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			
 			int input = 0;
 			while (true) {
-				System.out.print("제품 가격을 입력하세요> ");
+				System.out.print("💰 제품 가격을 입력하세요 > ");
 				String inputPrice = scanner.nextLine();
 				try {
 
 					input = Integer.parseInt(inputPrice);
 					if (input <= 0) {
-						System.out.println("가격은 0보다 커야 합니다.");
+						System.out.println("⚠️ 가격은 0보다 커야 합니다.");
 						continue;
 					}
 					break; // 정상 입력이면 루프 탈출
 				} catch (NumberFormatException e) {
-					System.out.println("가격에는 숫자만 넣으세요.");
+					System.out.println("⚠️ 가격에는 숫자만 넣으세요.");
 				}
 			}
 			dto.setPrice(input);// setPrice가격 저장
@@ -138,17 +137,17 @@ public class AdminDao implements CafeDiv<AdminVO> {
 				writer.write(String.format("%d,%s,%d\n", dto.getNo(), dto.getName(), dto.getPrice()));
 
 			} catch (IOException e) {
-				System.out.println("파일 저장 실패: " + e.getMessage());
+				System.out.println("⚠️ 파일 저장 실패: " + e.getMessage());
 			}
 
-			System.out.println("메뉴가 등록되었습니다: " + dto.getName());
+			System.out.println("🎉 메뉴가 등록되었습니다: " + dto.getName());
 			result = 1;
 
 			// 다음 메뉴 등록 여부 확인
-			System.out.print("다른 메뉴를 추가하시겠습니까? (Y/N): ");
+			System.out.print("➕ 다른 메뉴를 추가하시겠습니까? (Y/N) > ");
 			String answer = scanner.nextLine();
 			if (!answer.equalsIgnoreCase("Y")) {
-				System.out.println("메뉴 등록을 종료합니다.");
+				System.out.println("✅ 모든 메뉴 등록이 완료되었습니다! 😊");
 				addMore = false;
 			}
 		}
@@ -168,14 +167,17 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		List<String[]> lines = new ArrayList<>();
 
 		// 1. 사용자 입력 받기.
-		System.out.println("조회할 음료 no를 입력해주세요.");
+		System.out.println("🔍 조회할 음료 번호를 입력해주세요.");
 		String inputNo = scanner.nextLine().trim();
-		System.out.print("새로운 가격을 입력하세요: ");
+		System.out.print("💰 변경할 가격을 입력하세요 > ");
 		int inputPrice = 0;
 		try {
 			inputPrice = Integer.parseInt(scanner.nextLine().trim());
 		} catch (NumberFormatException e) {
-			System.out.println("숫자로 입력해 주세요.");
+		    System.out.println("───────────────────────────────────");
+		    System.out.println("  ⚠️ 숫자만 입력 가능합니다.");
+		    System.out.println("  ☕️ 다시 시도해 주세요.");
+		    System.out.println("───────────────────────────────────");
 
 		}
 
@@ -197,10 +199,10 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("파일을 찾을 수 없습니다: " + e.getMessage());
+			System.out.println("⚠️ 파일을 찾을 수 없습니다: " + e.getMessage());
 			return 0;
 		} catch (IOException e1) {
-			System.out.println("파일 읽기 오류: " + e1.getMessage());
+			System.out.println("⚠️ 파일 읽기 오류: " + e1.getMessage());
 			return 0;
 		}
 
@@ -213,15 +215,21 @@ public class AdminDao implements CafeDiv<AdminVO> {
 					writer.write(csvLine);
 					writer.newLine(); // 줄바꿈
 				}
-				System.out.printf("음료명 : %s, 가격 : %d원%n", inputNo, inputPrice);
-				System.out.println("업데이트가 완료되었습니다.");
+				System.out.println("───────────────────────────────────");
+				System.out.printf("  📌 수정 완료 - 음료번호: %s, 가격: %d원%n", inputNo, inputPrice);
+				System.out.println("  ✅ 메뉴 정보가 성공적으로 업데이트되었습니다.");
+				System.out.println("───────────────────────────────────");
 				return 1;
 			} catch (IOException e) {
-				System.out.println("파일 저장 중 오류 발생: " + e.getMessage());
+			    System.out.println("───────────────────────────────────");
+			    System.out.println("  ⚠️ 파일 저장 중 오류 발생: " + e.getMessage());
+			    System.out.println("───────────────────────────────────");
 				return 0;
 			}
 		} else {
-			System.out.println("해당 이름의 음료를 찾을 수 없습니다.");
+		    System.out.println("───────────────────────────────────");
+		    System.out.println("  ❌ 해당 번호의 음료를 찾을 수 없습니다.");
+		    System.out.println("───────────────────────────────────");
 			return 0;
 		}
 
@@ -238,7 +246,9 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		admin.removeIf(vo -> vo.getNo() == dto.getNo());// 번호기준으로 삭제
 
 		if (beforeSize == admin.size()) {// 원래사이즈가 beforeSize랑 같다면 삭제 x
-			System.out.println("삭제 대상 없음: no = " + dto.getNo());
+		    System.out.println("───────────────────────────────────");
+		    System.out.printf("  ❌ 삭제할 항목이 없습니다: no = %d%n", dto.getNo());
+		    System.out.println("───────────────────────────────────");
 			return 0;
 		}
 
@@ -254,10 +264,13 @@ public class AdminDao implements CafeDiv<AdminVO> {
 				writer.println(vo.getNo() + "," + vo.getName() + "," + vo.getPrice() + ",");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("⚠️ 파일 읽기 오류: " + e.getMessage());
 			return 0;
 		}
-		System.out.println("삭제 완료: no=" + dto.getNo());
+		System.out.println("───────────────────────────────────");
+		System.out.printf("  🗑️ 삭제 완료: no = %d%n", dto.getNo());
+		System.out.println("  ✅ 메뉴 정보가 성공적으로 삭제되었습니다.");
+		System.out.println("───────────────────────────────────");
 		return 1;
 	}
 

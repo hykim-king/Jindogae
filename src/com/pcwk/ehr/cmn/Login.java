@@ -31,7 +31,7 @@ public class Login {
 
 		// ID/비번을 HashMap으로 저장, ID/비번은 Scanner로 입력.
 		Map<String, String> userInfo = new HashMap<>();
-		userInfo.put("1234", "1234");
+		userInfo.put("admin", "1234");
 
 		// ID존재 확인: ID를 확인 하세요.
 		Scanner scanner = new Scanner(System.in);
@@ -70,15 +70,15 @@ public class Login {
 				String passAnswer = userInfo.get(id);
 
 				if (!passAnswer.equals(password)) {
-					printMessage("⚠️ 비밀번호를 확인해 주세요.", "☕️ 다시 입력해 주세요.");
+					System.out.println("⚠️ 비밀번호를 확인해 주세요.\n"+"☕️ 다시 입력해 주세요.");
 				} else {
-					printMessage("🎉 로그인 성공! 관리자로 접속합니다. ☕️", "");
+					System.out.println("🎉 로그인 성공! 관리자로 접속합니다. ☕️");
 					AdminBoard move = new AdminBoard();
 					move.board();
 					break;
 				}
 			} else {
-				printMessage("⚠️ 비밀번호를 입력하지 않았습니다.", "☕️ 다시 입력해 주세요.");
+				System.out.println("⚠️ 비밀번호를 입력하지 않았습니다.\n"+"☕️ 다시 입력해 주세요.");
 			}
 		} // while password
 
@@ -98,10 +98,10 @@ public class Login {
 
 	// 메시지 출력 함수
 	private static void printMessage(String line1, String line2) {
-		System.out.println("┌───────────────────────────────────┐");
+		System.out.println("───────────────────────────────────");
 		System.out.println("  " + line1); // line1 값 출력
 		System.out.println("  " + line2); // line2 값 출력
-		System.out.println("└───────────────────────────────────┘");
+		System.out.println("───────────────────────────────────");
 
 	}
 
