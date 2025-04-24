@@ -121,8 +121,17 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 	@Override
 	public List<MemberVO> doRetrieve(MemberVO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean flag = true;
+		if (cart.isEmpty()) {
+            System.out.println("장바구니가 비어 있습니다.");
+            flag = false;
+        }
+		
+	        System.out.println("\n[주문 내역]");
+	        for (MemberVO item : cart) {
+	            System.out.printf("이름 : %s,수량 : %d%n",item.getName(),item.getQuantity());
+	        }
+	        return cart ;
 	}
 
 	@Override
