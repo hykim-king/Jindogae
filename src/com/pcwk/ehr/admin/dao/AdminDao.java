@@ -25,7 +25,7 @@ import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
 
 public class AdminDao implements CafeDiv<AdminVO> {
-	public static final String CAFE_DATA = ".\\data\\cafe.csv";
+	public static final String CAFE_DATA = ".\\data\\cafe.csv";// CSV파일 읽는 과정
 	private List<AdminVO> admin = new ArrayList<AdminVO>();
 
 	public AdminDao() {
@@ -38,13 +38,13 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
 
-				String[] dataArr = line.split(",");
-				int no = Integer.parseInt(dataArr[0]);
-				String name = dataArr[1];
-				int price = Integer.parseInt(dataArr[2]);
+				String[] dataArr = line.split(",");//,기준으로 정렬
+				int no = Integer.parseInt(dataArr[0]);	 //첫 번째 NO로 설정
+				String name = dataArr[1];			  	 //두 번째 NAME으로 설정
+				int price = Integer.parseInt(dataArr[2]);//세 번째 PRICE로 설정
 
 				AdminVO adminVO = new AdminVO(no, name, price);
-				admin.add(adminVO);
+				admin.add(adminVO);//화면 출력
 			}
 //			System.out.println("추가 확인");
 //			for (AdminVO vo : admin) {
@@ -71,7 +71,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 	@Override
 	public List<AdminVO> doRetrieve(AdminVO dto) {
 
-		return new ArrayList<AdminVO>(admin);
+		return new ArrayList<AdminVO>(admin);//admin에 들어있는 리스트 불러와 읽기
 	}
 
 	@Override
@@ -82,17 +82,17 @@ public class AdminDao implements CafeDiv<AdminVO> {
 
 	@Override
 	public int doDelete(AdminVO dto) {
-		int beforeSize = admin.size();
+		int beforeSize = admin.size();//beforeSize 변수에 admin.size() 값 저장
 		
-		admin.removeIf(vo -> vo.getNo()==dto.getNo());
+		admin.removeIf(vo -> vo.getNo()==dto.getNo());//NO 기준으로 삭제
 		
-		if(beforeSize == admin.size()) {
+		if(beforeSize == admin.size()) {//삭제할 것이 없을 때
 			System.out.println("삭제 대상 없음: no = "+dto.getNo());
 			return 0;
 		}
 		
 		try(PrintWriter writer = new PrintWriter(CAFE_DATA)){
-			for(AdminVO vo : admin) {
+			for(AdminVO vo : admin) {//삭제한 후 리스트에서 변수값 다시 받아서 다시 정렬
 				writer.println(vo.getNo()+"," + vo.getName()+","+ vo.getPrice()+",");
 			}
 		} catch (IOException e) {		

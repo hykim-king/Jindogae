@@ -34,7 +34,7 @@ public class MainBoard {
 		System.out.println("  - 카푸치노: $4.50");
 		System.out.println("  - 모카: $4.50");
 
-		System.out.println("🥤 음료s:");
+		System.out.println("🥤 음료:");
 		System.out.println("  - 아이스티: $2.50");
 		System.out.println("  - 레모네이드: $3.00");
 		System.out.println("  - 스무디: $4.00");
@@ -68,10 +68,10 @@ public class MainBoard {
 			case 2:
 				menu.MenuBoard();//메뉴판으로 이동
 				break;
-			case 3:
+			case 3://프로그램 종료
 				System.out.println("프로그램 종료");
 				return;
-			default:
+			default://위 값 제외 입력시 다시 입력
 				System.out.println("잘못 입력했습니다.");
 				System.out.println("다시 입력해 주세요.");
 			}
