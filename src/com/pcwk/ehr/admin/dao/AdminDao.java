@@ -41,7 +41,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		try (BufferedReader reader = new BufferedReader(new FileReader(path));) {
 			String line;
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
+				//System.out.println(line);
 		
 
 				String[] dataArr = line.split(",");// , 기준으로 나누기
@@ -51,6 +51,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 
 				AdminVO adminVO = new AdminVO(no, name, price);
 				admin.add(adminVO);//화면 출력
+				System.out.printf("📋 No.%d 제품 정보 -[%s] %,d원%n", no, name, price);
 			}
 //			System.out.println("추가 확인");
 //			for (AdminVO vo : admin) {

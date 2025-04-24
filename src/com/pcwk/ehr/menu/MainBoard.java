@@ -51,11 +51,11 @@ public class MainBoard {
 		System.out.println("🐾 진돗개 카페에 와주셔서 감사합니다! 🐾");
 
 		Scanner scanner = new Scanner(System.in);
-
+		
 		while (true) {
-			System.out.println("====================================================");
+			System.out.println("========================================");
 			System.out.println(" ① 관리자 모드   ② 고객 모드   ③ 프로그램 종료      	      ");
-			System.out.println("====================================================");
+			System.out.println("========================================");
 			System.out.print("📝 모드를 선택하세요 >");
 			Login search = new Login();
 			Menu menu = new Menu();
