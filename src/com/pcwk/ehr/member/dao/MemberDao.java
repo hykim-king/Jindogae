@@ -27,9 +27,8 @@ import java.util.Scanner;
 import com.pcwk.ehr.cmn.CafeDiv;
 import com.pcwk.ehr.member.vo.MemberVO;
 
-
 public class MemberDao implements CafeDiv<MemberVO> {
-	
+
 	private List<MemberVO> cart = new ArrayList<>();
 	Scanner sc = new Scanner(System.in);
 
@@ -40,7 +39,7 @@ public class MemberDao implements CafeDiv<MemberVO> {
 		// 선택 반복할 수 있게.
 		int result = 0;
 		boolean addMore = true;
-		
+
 		while (addMore) {
 
 			System.out.print("선택할 제품 번호를 입력해 주세요> ");
@@ -61,15 +60,13 @@ public class MemberDao implements CafeDiv<MemberVO> {
 
 					// 메뉴 이름이 일치하면 가격 수정
 					if (parts.length == 3) {
-					    String menuNumber = parts[0].trim();
-					    if (menuNumber.equals(inputcart.trim())) {
-					        cartMenuName = parts[1].trim();
-					        flag = true;
-					        break;
-					    }
+						String menuNumber = parts[0].trim();
+						if (menuNumber.equals(inputcart.trim())) {
+							cartMenuName = parts[1].trim();
+							flag = true;
+							break;
+						}
 					}
-					
-					
 
 				} // while end
 				if (!flag) {
@@ -83,7 +80,7 @@ public class MemberDao implements CafeDiv<MemberVO> {
 				System.out.println("파일 읽기 오류: " + e1.getMessage());
 				return 0;
 			}
-			
+
 			// 2. 개수 선택하기
 			int input = 0;
 			while (true) {
@@ -114,24 +111,22 @@ public class MemberDao implements CafeDiv<MemberVO> {
 				addMore = false;
 			}
 		} // while 1 end
-		sc.close();
 		return result;
 	}// doSave end
-
 
 	@Override
 	public List<MemberVO> doRetrieve(MemberVO dto) {
 		boolean flag = true;
 		if (cart.isEmpty()) {
-            System.out.println("장바구니가 비어 있습니다.");
-            flag = false;
-        }
-		
-	        System.out.println("\n[주문 내역]");
-	        for (MemberVO item : cart) {
-	            System.out.printf("이름 : %s,수량 : %d%n",item.getName(),item.getQuantity());
-	        }
-	        return cart ;
+			System.out.println("장바구니가 비어 있습니다.");
+			flag = false;
+		}
+
+		System.out.println("\n[주문 내역]");
+		for (MemberVO item : cart) {
+			System.out.printf("이름 : %s,수량 : %d%n", item.getName(), item.getQuantity());
+		}
+		return cart;
 	}
 
 	@Override
@@ -143,39 +138,39 @@ public class MemberDao implements CafeDiv<MemberVO> {
 	@Override
 	public int doDelete(MemberVO dto) {
 		System.out.println("삭제할 번호를 입력하세요:");
-	    int input = sc.nextInt();  // 장바구니 번호를 입력받음
+		int input = sc.nextInt(); // 장바구니 번호를 입력받음
 
-	    // 장바구니에서 해당 번호의 아이템을 찾음
-	    for (int i = 0; i < cart.size(); i++) {
-	        MemberVO item = cart.get(i);
+		// 장바구니에서 해당 번호의 아이템을 찾음
+		for (int i = 0; i < cart.size(); i++) {
+			MemberVO item = cart.get(i);
 
-	        // 입력된 번호와 장바구니 번호가 일치하는지 확인
-	        if (item.getNO() == input) {  
-	            int currentQuantity = item.getQuantity();
-	            System.out.println("삭제할 수량을 입력하세요:");
-	            int deleteQuantity = sc.nextInt();  // 삭제할 수량 입력
+			// 입력된 번호와 장바구니 번호가 일치하는지 확인
+			if (item.getNO() == input) {
+				int currentQuantity = item.getQuantity();
+				System.out.println("삭제할 수량을 입력하세요:");
+				int deleteQuantity = sc.nextInt(); // 삭제할 수량 입력
 
-	            if (deleteQuantity <= 0) {
-	                System.out.println("수량은 1개 이상이어야 합니다.");
-	                return 0;
-	            }
+				if (deleteQuantity <= 0) {
+					System.out.println("수량은 1개 이상이어야 합니다.");
+					return 0;
+				}
 
-	            if (deleteQuantity > currentQuantity) {
-	                System.out.println("삭제할 수량이 장바구니 수량보다 많습니다.");
-	                return 0;
-	            } else if (deleteQuantity == currentQuantity) {
-	                cart.remove(i);  // 장바구니에서 아이템을 제거
-	                System.out.println("상품이 삭제되었습니다.");
-	            } else {
-	                item.setQuantity(currentQuantity - deleteQuantity);  // 일부 수량만 남기고 수정
-	                System.out.println("상품 일부 수량이 삭제되었습니다.");
-	            }
-	            return 1;  // 성공적으로 삭제됨
-	        }
-	    }
+				if (deleteQuantity > currentQuantity) {
+					System.out.println("삭제할 수량이 장바구니 수량보다 많습니다.");
+					return 0;
+				} else if (deleteQuantity == currentQuantity) {
+					cart.remove(i); // 장바구니에서 아이템을 제거
+					System.out.println("상품이 삭제되었습니다.");
+				} else {
+					item.setQuantity(currentQuantity - deleteQuantity); // 일부 수량만 남기고 수정
+					System.out.println("상품 일부 수량이 삭제되었습니다.");
+				}
+				return 1; // 성공적으로 삭제됨
+			}
+		}
 
-	    System.out.println("해당 번호의 상품이 장바구니에 없습니다.");
-	    return 0;  // 해당 번호가 장바구니에 없는 경우
+		System.out.println("해당 번호의 상품이 장바구니에 없습니다.");
+		return 0; // 해당 번호가 장바구니에 없는 경우
 
 	}
 }
