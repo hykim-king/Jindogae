@@ -34,7 +34,7 @@ public class MemberDao implements CafeDiv<MemberVO> {
 	Scanner sc = new Scanner(System.in);
 
 	public int doSave(MemberVO dto) {
-		String filePath = "C:\\Users\\user\\git\\repository\\JProject222\\menu.csv";
+		String filePath = ".\\data\\cafe.csv";
 		// 1. 메뉴 선택하기.
 		// 메뉴에 없는 제품 구매 불가.
 		// 선택 반복할 수 있게.
