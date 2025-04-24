@@ -55,6 +55,7 @@ public class Menu {
 
 		Scanner scanner = new Scanner(System.in);
 		MainBoard main = new MainBoard();
+		MemberVO vo = new MemberVO();
 
 		while (true) {
 			System.out.println("┌───────────────────────────────────────────────────────┐");
@@ -68,7 +69,6 @@ public class Menu {
 				while (true) {
 					System.out.println("===== 고객 메뉴 선택 =====");
 
-					MemberVO vo = new MemberVO();
 					int result = i.doSave(vo);
 
 					if (result == 1) {
@@ -80,11 +80,22 @@ public class Menu {
 				}
 				break;
 			case 2:
-				MemberVO vo = new MemberVO();
 				List<MemberVO> result = i.doRetrieve(vo);
 				break;
 			case 3://삭제 코드
-				
+				while (true) {
+					System.out.println("=====선택 메뉴 삭제=====");
+
+					int result2 = i.doDelete(vo);
+
+					if (result2 == 1) {
+						System.out.println("메뉴가 성공적으로 삭제되었습니다.");
+					} else {
+						System.out.println("메뉴 삭제에 실패했습니다.");
+					}
+					break;
+				}
+				break;
 			case 4:
 				System.out.println("프로그램 종료!");
 				System.out.println("메인화면으로 돌아갑니다.");
