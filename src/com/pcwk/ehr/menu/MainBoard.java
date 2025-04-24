@@ -70,7 +70,6 @@ public class MainBoard {
 			case 3://프로그램 종료
 				System.out.println("🔚 프로그램 종료");
 				System.exit(0);
-				return;
 			default://위 값 제외 입력시 다시 입력
 				System.out.println("⚠️ 잘못 입력했습니다.");
 				System.out.println("⚠️ 다시 입력해 주세요.");
