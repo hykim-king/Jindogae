@@ -26,8 +26,9 @@ import java.util.Scanner;
 
 import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
+import com.pcwk.ehr.cmn.PLog;
 
-public class AdminDao implements CafeDiv<AdminVO> {
+public class AdminDao implements CafeDiv<AdminVO>,PLog {
 
 	public static final String CAFE_DATA = ".\\data\\cafe.csv";// csv 경로 저장
 	private List<AdminVO> admin = new ArrayList<AdminVO>();// 리스트 만들기
@@ -58,11 +59,11 @@ public class AdminDao implements CafeDiv<AdminVO> {
 //				System.out.println(vo);
 //			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 파일 저장 실패: " + e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 입출력 오류 발생: " + e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 알 수 없는 오류 발생: " + e.getMessage());
 		}
 
 		return admin;// csv파일 읽기
@@ -83,10 +84,10 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			System.out.print("📝 제품명을 입력하세요 > ");
 			String inputName = scanner.nextLine();
 			
-			// 이름이 중복되면 안됨.
+			// 이름이 공백되면 안됨.
 			if (inputName.isEmpty()) {
 				System.out.println("⚠️ 메뉴 이름은 필수입니다.");
-				continue;
+				return 0;
 			}
 			isDuplicate1 = false;
 			// 중복되면 메세지를 생성 후 빠져나간다.
@@ -117,7 +118,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 					}
 					break; // 정상 입력이면 루프 탈출
 				} catch (NumberFormatException e) {
-					System.out.println("⚠️ 가격에는 숫자만 넣으세요.");
+					LOG.debug("⚠️ 가격에는 숫자만 넣으세요.");
 				}
 			}
 			dto.setPrice(input);// setPrice가격 저장
@@ -138,10 +139,10 @@ public class AdminDao implements CafeDiv<AdminVO> {
 				writer.write(String.format("%d,%s,%d\n", dto.getNo(), dto.getName(), dto.getPrice()));
 
 			} catch (IOException e) {
-				System.out.println("⚠️ 파일 저장 실패: " + e.getMessage());
+				LOG.debug("⚠️ 파일 저장 실패: " + e.getMessage());
 			}
 
-			System.out.println("🎉 메뉴가 등록되었습니다: " + dto.getName());
+			LOG.debug("🎉 메뉴가 등록되었습니다: " + dto.getName());
 			result = 1;
 
 			// 다음 메뉴 등록 여부 확인
@@ -175,10 +176,10 @@ public class AdminDao implements CafeDiv<AdminVO> {
 		try {
 			inputPrice = Integer.parseInt(scanner.nextLine().trim());
 		} catch (NumberFormatException e) {
-		    System.out.println("───────────────────────────────────");
-		    System.out.println("  ⚠️ 숫자만 입력 가능합니다.");
-		    System.out.println("  ☕️ 다시 시도해 주세요.");
-		    System.out.println("───────────────────────────────────");
+			LOG.debug("───────────────────────────────────");
+		    LOG.debug("  ⚠️ 숫자만 입력 가능합니다.");
+		    LOG.debug("  ☕️ 다시 시도해 주세요.");
+		    LOG.debug("───────────────────────────────────");
 
 		}
 
@@ -200,10 +201,10 @@ public class AdminDao implements CafeDiv<AdminVO> {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("⚠️ 파일을 찾을 수 없습니다: " + e.getMessage());
+			LOG.debug("⚠️ 파일을 찾을 수 없습니다: " + e.getMessage());
 			return 0;
 		} catch (IOException e1) {
-			System.out.println("⚠️ 파일 읽기 오류: " + e1.getMessage());
+			LOG.debug("⚠️ 파일 읽기 오류: " + e1.getMessage());
 			return 0;
 		}
 
@@ -222,9 +223,9 @@ public class AdminDao implements CafeDiv<AdminVO> {
 				System.out.println("───────────────────────────────────");
 				return 1;
 			} catch (IOException e) {
-			    System.out.println("───────────────────────────────────");
-			    System.out.println("  ⚠️ 파일 저장 중 오류 발생: " + e.getMessage());
-			    System.out.println("───────────────────────────────────");
+				LOG.debug("───────────────────────────────────");
+				LOG.debug("  ⚠️ 파일 저장 중 오류 발생: " + e.getMessage());
+				LOG.debug("───────────────────────────────────");
 				return 0;
 			}
 		} else {
@@ -265,7 +266,7 @@ public class AdminDao implements CafeDiv<AdminVO> {
 				writer.println(vo.getNo() + "," + vo.getName() + "," + vo.getPrice() + ",");
 			}
 		} catch (IOException e) {
-			System.out.println("⚠️ 파일 읽기 오류: " + e.getMessage());
+			LOG.debug("⚠️ 파일 읽기 오류: " + e.getMessage());
 			return 0;
 		}
 		System.out.println("───────────────────────────────────");

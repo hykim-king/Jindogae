@@ -14,11 +14,8 @@
 package com.pcwk.ehr.member.dao;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +23,10 @@ import java.util.Scanner;
 
 import com.pcwk.ehr.admin.vo.AdminVO;
 import com.pcwk.ehr.cmn.CafeDiv;
+import com.pcwk.ehr.cmn.PLog;
 import com.pcwk.ehr.member.vo.MemberVO;
 
-public class MemberDao implements CafeDiv<MemberVO> {
+public class MemberDao implements CafeDiv<MemberVO>,PLog {
 
 	private List<MemberVO> cart = new ArrayList<>();
 	private int currentNo = 1;
@@ -61,11 +59,11 @@ public class MemberDao implements CafeDiv<MemberVO> {
 //				System.out.println(vo);
 //			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 파일 저장 실패: " + e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 입출력 오류 발생: " + e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.debug("⚠️ 알 수 없는 오류 발생: " + e.getMessage());
 		}
 
 		return admin;// csv파일 읽기
@@ -115,10 +113,10 @@ public class MemberDao implements CafeDiv<MemberVO> {
 					continue; // 다시 메뉴 선택으로 돌아가기
 				}
 			} catch (FileNotFoundException e) {
-				System.out.println("⚠️ 파일을 찾을 수 없습니다: " + e.getMessage());
+				LOG.debug("⚠️ 파일을 찾을 수 없습니다: " + e.getMessage());
 				return 0;
 			} catch (IOException e1) {
-				System.out.println("⚠️ 파일 읽기 오류: " + e1.getMessage());
+				LOG.debug("⚠️ 파일 읽기 오류: " + e1.getMessage());
 				return 0;
 			}
 
@@ -135,7 +133,7 @@ public class MemberDao implements CafeDiv<MemberVO> {
 					}
 					break; // 정상 입력이면 루프 탈출
 				} catch (NumberFormatException e) {
-					System.out.println("⚠️ 가격에는 숫자만 넣으세요.");
+					LOG.debug("⚠️ 가격에는 숫자만 넣으세요.");
 				}
 			} // 개수 while end
 			MemberVO newDto = new MemberVO();
@@ -196,7 +194,7 @@ public class MemberDao implements CafeDiv<MemberVO> {
 		try {
 			input = Integer.parseInt(sc.nextLine());
 		} catch (NumberFormatException e) {
-			System.out.println("⚠️ 번호는 숫자만 입력 가능합니다.");
+			LOG.debug("⚠️ 번호는 숫자만 입력 가능합니다.");
 			return 0;
 		}
 
