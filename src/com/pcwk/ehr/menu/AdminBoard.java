@@ -28,7 +28,7 @@ public class AdminBoard {
 
 		while (true) {;
 			System.out.println("====================================================");
-			System.out.println(" ① 메뉴 조회  ② 메뉴 등록  ③ 메뉴 수정  ④ 메뉴 삭제  ⑤ 프로그램 종료     	  ");
+			System.out.println(" ① 음료 조회  ② 음료 등록  ③ 음료 수정  ④ 음료 삭제  ⑤ 프로그램 종료  ");
 			System.out.println("====================================================");
 			System.out.print("어떤 프로그램을 할 지 선택하세요 >");
 			int search = scanner.nextInt();
